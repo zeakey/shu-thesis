@@ -1,9 +1,15 @@
-# build tex source
-echo "Start to build..."
+#/bin/bash
 set -e
-pdflatex shu-thesis.tex
-bibtex shu-thesis.aux
-pdflatex shu-thesis.tex
-pdflatex shu-thesis.tex
-echo "Done!"
-
+if [ ! -e tmp ]; then
+  mkdir tmp
+fi
+if [[ [$(uname)=="Linux"] || [$(uname)=="Darwin"] ]]; then
+  LATEX="xelatex"
+else
+  LATEX="pdflatex"
+fi
+echo "Building with "$LATEX
+"$LATEX" -output-directory tmp shu-thesis.tex
+bibtex tmp/shu-thesis.aux
+"$LATEX" -output-directory tmp shu-thesis.tex
+"$LATEX" -output-directory tmp shu-thesis.tex

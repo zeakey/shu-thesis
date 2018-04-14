@@ -1,3 +1,4 @@
+rm -rf tmp
 rm *.log
 rm shu-thesis.pdf
 rm *.dvi
