@@ -9,7 +9,7 @@ else
   LATEX="pdflatex"
 fi
 echo "Building with "$LATEX
-"$LATEX" -output-directory tmp shu-thesis.tex
+"$LATEX" -interaction=nonstopmode -output-directory tmp shu-thesis.tex
 bibtex tmp/shu-thesis.aux
-"$LATEX" -output-directory tmp shu-thesis.tex
-"$LATEX" -output-directory tmp shu-thesis.tex
+"$LATEX" -interaction=nonstopmode -output-directory tmp shu-thesis.tex
+"$LATEX" -interaction=nonstopmode -output-directory tmp shu-thesis.tex
