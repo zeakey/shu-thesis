@@ -3,17 +3,15 @@
 % pdflatex is recommanded
 % This template is released under BSD 2-Clause license.
 \documentclass[UTF8]{ctexart}
+%====================================================
+% 颜色和自定义颜色
 \usepackage{xcolor}
-
-% 绘图
-\usepackage{pgfplots}
-
-
-% 自定义的一些颜色
 \definecolor{hyperref-green}{RGB}{0,150,0}
 \definecolor{hyperref-red}{RGB}{200,0,0}
 \definecolor{hyperref-blue}{RGB}{0,0,200}
+%====================================================
 
+%====================================================
 % 超链接
 \usepackage[
 pagebackref=true,
@@ -23,14 +21,21 @@ urlcolor=hyperref-green,
 menucolor=black,
 letterpaper=true,
 breaklinks=true,
+bookmarks=true,
 colorlinks
 ]{hyperref}
 \usepackage{bibentry}
+%====================================================
 
+%====================================================
+%导入外部pdf
 \usepackage{pdfpages} % includepdf
+%====================================================
 
-%% 公式和数学标识相关%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%====================================================
+% 公式和数学标识，算法流程图
 \usepackage{amsmath}
+\usepackage{bm} %%某些矢量需要加粗字符，除mathbf外的另一种方式%By Kuber
 \usepackage{amssymb}
 \usepackage{pifont}
 \usepackage{listings} %插入代码
@@ -45,8 +50,9 @@ colorlinks
 \newcommand{\argmin}{\mathop{\mathrm{argmin}}\limits}
 \newcommand{\argmax}{\mathop{\mathrm{argmax}}\limits}
 \usepackage{amsfonts}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%====================================================
 
+%====================================================
 % 插入图表和图表描述
 \usepackage{graphicx, caption, subfigure, float}
 \DeclareCaptionFormat{myformat}{\fontsize{8}{8}\selectfont#1#2#3}
@@ -54,12 +60,17 @@ colorlinks
 \captionsetup{margin=2cm}
 \captionsetup{justification=centering}
 \usepackage{overpic}
+% 绘图
+\usepackage{pgfplots}
+%====================================================
+
+%====================================================
+% 其他格式，和样式
 % 将章节标号转为中文
 \usepackage{zhnumber}  
 %% geometry
 \usepackage{geometry}
 \geometry{left=3.17cm,right=3.17cm,top=3.0cm,bottom=3.0cm}  % 页边距
-
 % 页眉相关的设置
 \usepackage{fancyhdr}
 \fancyhf{}  % 清除默认页眉
@@ -67,25 +78,35 @@ colorlinks
 \lhead{上海大学硕士学位论文}  % 添加右侧页眉
 \rhead{KAI ZHAO: \url{http://kaiz.xyz}}  % 右侧页眉,写你自己的论文的时候请去掉本行。
 \cfoot{\thepage}  % 添加页脚页码
-
 %% 设置章节格式
 \CTEXsetup[name={第, 章}]{section}
 \CTEXsetup[number={\chinese{section}}]{section}
 \CTEXsetup[format+={\zihao{-2}}]{section}   % 大章节字体: 小二
+\CTEXsetup[beforeskip={17pt}]{section} % 标题与上面文本的间距%By Kuber
+\CTEXsetup[afterskip={16.5pt}]{section}  % 标题与下面文本的间距%By Kuber
+\CTEXsetup[format+={\zihao{3}}]{subsection} % 小章节字体: 三号
+\CTEXsetup[beforeskip={13pt}]{subsection}%同上，间距可调
+\CTEXsetup[afterskip={13pt}]{subsection}%同上，间距可调
+\CTEXsetup[beforeskip={13pt}]{subsubsection}%同上，间距可调
+\CTEXsetup[afterskip={13pt}]{subsubsection}%同上，间距可调
 \CTEXsetup[format+={\zihao{3}}]{subsection} % 小章节字体: 三号
 \CTEXsetup[format+={\zihao{-4}}]{subsubsection}
-
 % 图表按章节编号
 \usepackage{chngcntr}
 \counterwithin{figure}{section}
+%====================================================
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%====================================================
 %常用的命令
 \newcommand{\red}[1]{{\textcolor{red}{#1}}}%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%====================================================
 
+%====================================================
+% 开始正文
 \begin{document}
 \zihao{-4} %
+\linespread{1.6} \selectfont  % 调整全文为1.6倍line间距，非常接近word版本1.5行间距%By Kuber
+
 % 导入封面内容，注意这个地方的页码请根据你的实际情况设置，
 % 我的cover.pdf有6页，所以是插入1-6页
 \includepdf[pages={1-7}]{cover.pdf} 
@@ -110,8 +131,6 @@ colorlinks
 {\hypersetup{linkcolor=black}
 \tableofcontents}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagebreak
 \section{绪论}
 \pagenumbering{arabic} % 正文开始，页码使用阿拉伯数字
@@ -209,7 +228,24 @@ x,& \text{if } x\geq 0\\
 \end{bmatrix}.
 \label{eq:matrix}
 \end{equation}
-
+带有矢量的公式：%By Kuber
+\begin{equation}
+\label{eq:current_density_inandout}
+\bm{J_i} = -\sigma_i \nabla \phi_i ~;~ \bm{J_e}= -\sigma_e \nabla \phi_e ~.
+\end{equation}
+带有联立大括号的公式：%By Kuber
+\begin{equation}
+\label{eq:runge_p_eq}
+\left\lbrace
+\begin{aligned}
+V_{i+1} &= V_i + c_1 K_1 + c_2 K_2 + \cdots + c_p K_p \\
+K_1 &= \Delta t f(t_i ,V_i) \\
+K_2 &= \Delta t f\left(t_i + a_2 \Delta t, V_i + b_{21} K_1\right) \\
+\cdots&~\cdots~\cdots~\cdots~\cdots~\cdots \\
+K_p &= \Delta t f\left( t_i + a_p \Delta t, V_i + b_{p1} K_1 + \cdots + b_{p,p-1} K_{p-1}\right) ~.
+\end{aligned}
+\right.
+\end{equation}
 对于一个神经网络的求解问题可以公式化成以下形式：
 \begin{equation}
 \Theta = \argmin_{\theta} J(\theta)
@@ -378,64 +414,71 @@ fig.savefig('bar3d.pdf')
 \end{lstlisting}
 
 \subsection{绘图}
-除了通过直接插入已经生成的图像文件之外，\LaTeX 还可以通过Tikz宏包直接绘制函数图像：
-\begin{figure}[!h]
-\centering
-\begin{tabular}{@{}cc@{}}
-  \pgfplotsset{width=0.5\textwidth}
-  \begin{tikzpicture}
-    \begin{axis}[
-    hide axis,                              %隐藏坐标
-    colormap/cool,                          %颜色风格
-    ]
-    \addplot3[
-    mesh,                                   %绘制的三维图像是网格
-    samples=50,                             %定义域分割数量
-    domain=-8:8,                            %定义域
-    ]
-    {sin(deg(sqrt(x^2+y^2)))/sqrt(x^2+y^2)};    %二元显式函数
-        \addlegendentry{$\frac{sin(r)}{r}$}         %添加图例
-    \end{axis}
-  \end{tikzpicture} & 
+除了通过直接插入已经生成的图像文件之外，\LaTeX 还可以通过 Tikz 宏包直接绘制函数图像。
 %
-  \pgfplotsset{width=0.5\textwidth}
-  \begin{tikzpicture}
-    \begin{axis}[colorbar]         % 绘制坐标，并设置一个彩色指示条
-    \addplot3[surf]                % 绘制三维图
-    {x^2+y^2};                    % 输入二元显式函数
-    \end{axis}
-  \end{tikzpicture}
-\end{tabular}
-\caption{通过Tikz绘制函数图像。}
-\label{fig:tikz_surface}
-\end{figure}
+下面有几个使用Tikz包绘制三位函数曲面和直方图的例子，由于 Tikz 会让编译的时间变长，代码已经被注释。
+%
+如果你有兴趣的话可以取消注释然后编译查看效果，或者预览预编译的pdf:
+\url{http://data.kaiz.xyz/shu-thesis/shu-thesis.pdf}。
 
-还有直方图：
-\begin{figure}[!hbt]
-\centering
-\pgfplotsset{width=0.5\textwidth}
-\begin{tikzpicture}
-\begin{axis}[ybar,enlargelimits=0.15]  % 绘制关于y坐标的条形图，条形之间的最大间隔是0.15cm
-\addplot[draw=blue,fill=red]           % 蓝色边界、红色填充
-coordinates
-{
- (0,4) (1,1) (2,2)
- (3,5) (4,6) (5,1)
-};
-\addplot[draw=black,fill=blue]         % 黑色边界、蓝色填充
-coordinates
-{
- (0,3) (1,4) (2,2)
- (3,9) (4,6) (5,2)
-};
-\end{axis}
-\end{tikzpicture}
-\caption{通过Tikz绘制直方图。}\label{fig:tikz_hist}
-\end{figure}
+%\begin{figure}[!h]
+%\centering
+%\begin{tabular}{@{}cc@{}}
+%  \pgfplotsset{width=0.5\textwidth}
+%  \begin{tikzpicture}
+%    \begin{axis}[
+%    hide axis,                              %隐藏坐标
+%    colormap/cool,                          %颜色风格
+%    ]
+%    \addplot3[
+%    mesh,                                   %绘制的三维图像是网格
+%    samples=50,                             %定义域分割数量
+%    domain=-8:8,                            %定义域
+%    ]
+%    {sin(deg(sqrt(x^2+y^2)))/sqrt(x^2+y^2)};    %二元显式函数
+%        \addlegendentry{$\frac{sin(r)}{r}$}         %添加图例
+%    \end{axis}
+%  \end{tikzpicture} & 
+%  %==============================%
+%  \pgfplotsset{width=0.5\textwidth}
+%  \begin{tikzpicture}
+%    \begin{axis}[colorbar]         % 绘制坐标，并设置一个彩色指示条
+%    \addplot3[surf]                % 绘制三维图
+%    {x^2+y^2};                    % 输入二元显式函数
+%    \end{axis}
+%  \end{tikzpicture}
+%\end{tabular}
+%\caption{通过Tikz绘制函数图像。}
+%\label{fig:tikz_surface}
+%\end{figure}
+%还有直方图：
+%\begin{figure}[!hbt]
+%\centering
+%\pgfplotsset{width=0.5\textwidth}
+%\begin{tikzpicture}
+%\begin{axis}[ybar,enlargelimits=0.15]  % 绘制关于y坐标的条形图，条形之间的最大间隔是0.15cm
+%\addplot[draw=blue,fill=red]           % 蓝色边界、红色填充
+%coordinates
+%{
+% (0,4) (1,1) (2,2)
+% (3,5) (4,6) (5,1)
+%};
+%\addplot[draw=black,fill=blue]         % 黑色边界、蓝色填充
+%coordinates
+%{
+% (0,3) (1,4) (2,2)
+% (3,9) (4,6) (5,2)
+%};
+%\end{axis}
+%\end{tikzpicture}
+%\caption{通过Tikz绘制直方图。}\label{fig:tikz_hist}
+%\end{figure}
+%
 
 本章节的所有图像都是\textbf{使用\LaTeX 代码直接绘制的}，并没有使用任何Matlab或者matplotlib等第三方程序生成图像。
 当然，生成的的图像全部都是矢量图。
-\pagebreak
+
+%\pagebreak
 \subsection{表格}
 \LaTeX使用table环境生成表格。下面就是生成表\ref{tab:performance}的\LaTeX代码：
 
@@ -544,6 +587,7 @@ coordinates
 
 %% 参考文献
 \pagebreak
+\zihao{5} % 依据上大Word模板,参考文献字号为5号字体%By Kuber
 \bibliographystyle{ieeetr}
 \addcontentsline{toc}{section}{参考文献}
 \bibliography{shu-thesis}
@@ -551,6 +595,7 @@ coordinates
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagebreak
+\zihao{-4} % 字体调整回小四 %By Kuber
 \section*{作者在攻读硕士学位期间公开发表的论文}
 \addcontentsline{toc}{section}{作者在攻读硕士学位期间公开发表的论文}
 %\nobibliography*
