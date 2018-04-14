@@ -1,5 +1,7 @@
-master-thesis.pdf
+shu-thesis.pdf
 *-converted-to.pdf
+*.fdb_latexmk
+*.synctex*
 *.ppt
 *.pptx
 *.m

@@ -7,7 +7,8 @@
 
 % 绘图
 \usepackage{pgfplots}
-
+% 绘制算法流程图
+%\usepackage{algorithm, algorithmic}
 
 % 自定义的一些颜色
 \definecolor{hyperref-green}{RGB}{0,150,0}
@@ -23,6 +24,7 @@ urlcolor=hyperref-green,
 menucolor=black,
 letterpaper=true,
 breaklinks=true,
+bookmarks=true,%使得生成的pdf文档含有目录索引，方便阅读和定位%By Kuber
 colorlinks
 ]{hyperref}
 \usepackage{bibentry}
@@ -31,6 +33,7 @@ colorlinks
 
 %% 公式和数学标识相关%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{amsmath}
+\usepackage{bm} %%某些矢量需要加粗字符，除mathbf外的另一种方式%By Kuber
 \usepackage{amssymb}
 \usepackage{pifont}
 \usepackage{listings} %插入代码
@@ -54,6 +57,9 @@ colorlinks
 \captionsetup{margin=2cm}
 \captionsetup{justification=centering}
 \usepackage{overpic}
+%将图表的标题中冒号强制转换为空格%By Kuber
+\DeclareCaptionLabelSeparator{twospace}{\ ~}
+\captionsetup{labelsep=twospace} 
 % 将章节标号转为中文
 \usepackage{zhnumber}  
 %% geometry
@@ -67,17 +73,31 @@ colorlinks
 \lhead{上海大学硕士学位论文}  % 添加右侧页眉
 \rhead{KAI ZHAO: \url{http://kaiz.xyz}}  % 右侧页眉,写你自己的论文的时候请去掉本行。
 \cfoot{\thepage}  % 添加页脚页码
+%\cfoot{\small\thepage}  %%可切换为小一号字体的页码%By Kuber
 
 %% 设置章节格式
 \CTEXsetup[name={第, 章}]{section}
 \CTEXsetup[number={\chinese{section}}]{section}
 \CTEXsetup[format+={\zihao{-2}}]{section}   % 大章节字体: 小二
-\CTEXsetup[format+={\zihao{3}}]{subsection} % 小章节字体: 三号
+\CTEXsetup[beforeskip={17pt}]{section} % 标题与上面文本的间距%By Kuber 
+\CTEXsetup[afterskip={16.5pt}]{section}  % 标题与下面文本的间距%By Kuber 
+\CTEXsetup[format+={\zihao{3}}]{subsection} % 小章节字体: 三号\
+\CTEXsetup[beforeskip={13pt}]{subsection}%同上，间距可调
+\CTEXsetup[afterskip={13pt}]{subsection}%同上，间距可调
 \CTEXsetup[format+={\zihao{-4}}]{subsubsection}
+\CTEXsetup[beforeskip={13pt}]{subsubsection}%同上，间距可调
+\CTEXsetup[afterskip={13pt}]{subsubsection}%同上，间距可调
 
 % 图表按章节编号
 \usepackage{chngcntr}
 \counterwithin{figure}{section}
+
+%环境中item编号为固定样式，采用enumerate可变换样式，如[1]->【1】
+\usepackage{enumerate} % By Kuber
+
+%字体更换--若有意使用更接近word版宋体的字体，请使用以下两句，但不可使用pdflatex编译
+%\usepackage{fontspec} % By Kuber
+%\setmainfont{STSongti-SC-Regular}%By Kuber
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %常用的命令
@@ -86,6 +106,7 @@ colorlinks
 
 \begin{document}
 \zihao{-4} %
+\linespread{1.6} \selectfont  % 调整全文为1.6倍line间距，非常接近word版本1.5行间距%By Kuber
 % 导入封面内容，注意这个地方的页码请根据你的实际情况设置，
 % 我的cover.pdf有6页，所以是插入1-6页
 \includepdf[pages={1-7}]{cover.pdf} 
@@ -208,6 +229,24 @@ x,& \text{if } x\geq 0\\
 1 & \cdots & 1 
 \end{bmatrix}.
 \label{eq:matrix}
+\end{equation}
+带有矢量的公式：%By Kuber
+\begin{equation}
+\label{eq:current_density_inandout}
+\bm{J_i} = -\sigma_i \nabla \phi_i ~;~ \bm{J_e}= -\sigma_e \nabla \phi_e ~.
+\end{equation}
+带有联立大括号的公式：%By Kuber
+\begin{equation}
+\label{eq:runge_p_eq}
+\left\lbrace
+\begin{aligned}
+V_{i+1} &= V_i + c_1 K_1 + c_2 K_2 + \cdots + c_p K_p \\
+K_1 &= \Delta t f(t_i ,V_i) \\
+K_2 &= \Delta t f\left(t_i + a_2 \Delta t, V_i + b_{21} K_1\right) \\
+\cdots&~\cdots~\cdots~\cdots~\cdots~\cdots \\
+K_p &= \Delta t f\left( t_i + a_p \Delta t, V_i + b_{p1} K_1 + \cdots + b_{p,p-1} K_{p-1}\right) ~.
+\end{aligned}
+\right.
 \end{equation}
 
 对于一个神经网络的求解问题可以公式化成以下形式：
@@ -532,8 +571,10 @@ coordinates
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{itemize}
   \item 数学符号速查表 \url{http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html}
+  \item 常用数学符号的表示方法 \url{http://www.mohu.org/info/symbols/symbols.htm} %By Kuber
   \item 字体大小 \url{https://texblog.org/2012/08/29/changing-the-font-size-in-latex/}
   \item 一个比较全的 \LaTeX \ WiKi \url{https://en.wikibooks.org/wiki/LaTeX}
+  \item 其他高校Latex论文模板 \url{https://github.com/sjtug/SJTUThesis https://github.com/xueruini/thuthesis}
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -544,6 +585,7 @@ coordinates
 
 %% 参考文献
 \pagebreak
+%\zihao{5} % 依据上大Word模板,参考文献字号为5号字体%By Kuber
 \bibliographystyle{ieeetr}
 \addcontentsline{toc}{section}{参考文献}
 \bibliography{shu-thesis}
@@ -551,10 +593,12 @@ coordinates
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \pagebreak
+%\zihao{-4} % 字体调整回小四 %By Kuber
 \section*{作者在攻读硕士学位期间公开发表的论文}
 \addcontentsline{toc}{section}{作者在攻读硕士学位期间公开发表的论文}
 %\nobibliography*
 \begin{enumerate}
+%\begin{enumerate}[【1】] %如有需要可调整item样式为【1】
 \item “Object Skeleton Extraction in Natural Images by Fusing Scale-associated Deep Side Outputs",in \emph{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}, June 2016.
 (IEEE CVPR为模式识别和计算机视觉的三大国际顶级会议，中国计算机协会列为A类会议，根据2017年谷歌学术统计，h5-index排名所有学术刊物第35位，位列工程和计算机领域所有学术刊物第一位。)
 
