@@ -1,9 +1,7 @@
 #/bin/bash
 set -e
-if [ ! -e tmp ]; then
-  mkdir tmp
-fi
-if [[ [$(uname)=="Linux"] || [$(uname)=="Darwin"] ]]; then
+mkdir -p tmp
+if [ "$(uname)" == "Linux" ] || [ "$(uname)" == "Darwin" ]; then
   LATEX="xelatex"
 else
   LATEX="pdflatex"
@@ -13,3 +11,4 @@ echo "Building with "$LATEX
 bibtex tmp/shu-thesis.aux
 "$LATEX" -interaction=nonstopmode -output-directory tmp shu-thesis.tex
 "$LATEX" -interaction=nonstopmode -output-directory tmp shu-thesis.tex
+
