@@ -109,7 +109,9 @@ colorlinks
 
 % 导入封面内容，注意这个地方的页码请根据你的实际情况设置，
 % 我的cover.pdf有6页，所以是插入1-6页
-\includepdf[pages={1-7}]{cover.pdf} 
+\newgeometry{top=0pt}
+\includepdf[pages={1-7}]{cover.pdf}
+\restoregeometry{} % 调整 top margin 以保证超链接跳转无误
 \pagenumbering{Roman} % 目录之前的内容(包括目录)页码使用罗马数字
 \setcounter{page}{7}  % LaTeX的起始页码
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
