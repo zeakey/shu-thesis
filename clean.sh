@@ -1,4 +1,4 @@
-rm -rf tmp
+rm -rf output
 rm *.log
 rm shu-thesis.pdf
 rm *.dvi
